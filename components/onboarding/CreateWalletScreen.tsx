@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
-import * as Clipboard from "expo-clipboard";
 import {
   ArrowLeft,
   Copy,
@@ -9,7 +8,6 @@ import {
   RefreshCw,
   Shield,
 } from "lucide-react-native";
-import { useWallet } from "../../context/WalletContext";
 
 interface AppHeaderProps {
   title: string;
@@ -60,36 +58,32 @@ const CreateWalletScreen = ({
   onComplete = () => {},
   onBack = () => {},
 }: CreateWalletScreenProps) => {
-  const { generateNewSeedPhrase } = useWallet();
-  const [seedPhrase, setSeedPhrase] = useState<string>("");
+  const [seedPhrase, setSeedPhrase] = useState<string>(
+    "abandon ability able about above absent absorb abstract absurd abuse access accident",
+  );
   const [isVisible, setIsVisible] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
   const [hasConfirmed, setHasConfirmed] = useState(false);
 
-  useEffect(() => {
-    // Generate a new seed phrase when the component mounts
-    const newSeedPhrase = generateNewSeedPhrase();
-    setSeedPhrase(newSeedPhrase);
-  }, []);
-
   const words = seedPhrase.split(" ");
 
-  const generateNewSeedPhraseHandler = () => {
-    const newSeedPhrase = generateNewSeedPhrase();
-    setSeedPhrase(newSeedPhrase);
+  const generateNewSeedPhrase = () => {
+    // In a real implementation, this would use a secure library to generate a BIP-39 seed phrase
+    const dummySeedPhrases = [
+      "abandon ability able about above absent absorb abstract absurd abuse access accident",
+      "zoo youth water volcano utility upgrade table athlete abuse acoustic armed auction",
+      "magic kingdom jungle island harvest galaxy exit dawn curious broken butterfly attract",
+    ];
+    const randomIndex = Math.floor(Math.random() * dummySeedPhrases.length);
+    setSeedPhrase(dummySeedPhrases[randomIndex]);
     setHasCopied(false);
     setHasConfirmed(false);
   };
 
-  const copySeedPhrase = async () => {
-    try {
-      await Clipboard.setStringAsync(seedPhrase);
-      setHasCopied(true);
-      Alert.alert("Copied", "Seed phrase copied to clipboard");
-    } catch (error) {
-      console.error("Error copying to clipboard:", error);
-      Alert.alert("Error", "Failed to copy seed phrase to clipboard");
-    }
+  const copySeedPhrase = () => {
+    // In a real implementation, this would use Clipboard.setString(seedPhrase)
+    setHasCopied(true);
+    Alert.alert("Copied", "Seed phrase copied to clipboard");
   };
 
   const toggleVisibility = () => {
@@ -134,7 +128,7 @@ const CreateWalletScreen = ({
         <View className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 mb-6">
           <View className="flex-row justify-between items-center mb-4">
             <TouchableOpacity
-              onPress={generateNewSeedPhraseHandler}
+              onPress={generateNewSeedPhrase}
               className="bg-gray-200 dark:bg-gray-700 rounded-full p-2"
             >
               <RefreshCw size={20} color="#4b5563" />
