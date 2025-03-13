@@ -92,10 +92,7 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    // Using boxShadow instead of deprecated shadow* props
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, StatusBar } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { Slot, Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
 import AuthScreen from "../components/auth/AuthScreen";
 import OnboardingScreen from "../components/onboarding/OnboardingScreen";

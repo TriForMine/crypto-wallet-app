@@ -68,7 +68,7 @@ const RecentTransactions = ({
   const renderTransactionIcon = (type: string, status: string) => {
     if (status === "pending") {
       return (
-        <View className="w-10 h-10 rounded-full bg-gray-200 items-center justify-center">
+        <View className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 items-center justify-center">
           <Clock size={20} color="#6B7280" />
         </View>
       );
@@ -77,7 +77,9 @@ const RecentTransactions = ({
     return (
       <View
         className={`w-10 h-10 rounded-full items-center justify-center ${
-          type === "receive" ? "bg-green-100" : "bg-red-100"
+          type === "receive"
+            ? "bg-green-100 dark:bg-green-900/30"
+            : "bg-red-100 dark:bg-red-900/30"
         }`}
       >
         {type === "receive" ? (
@@ -91,14 +93,14 @@ const RecentTransactions = ({
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <TouchableOpacity
-      className="flex-row items-center py-3 border-b border-gray-100"
+      className="flex-row items-center py-3 border-b border-gray-100 dark:border-gray-800"
       onPress={() => onTransactionPress(item)}
     >
       {renderTransactionIcon(item.type, item.status)}
 
       <View className="flex-1 ml-3">
         <View className="flex-row justify-between">
-          <Text className="font-medium text-gray-900">
+          <Text className="font-medium text-gray-900 dark:text-white">
             {item.type === "receive"
               ? "Received"
               : item.type === "send"
@@ -108,10 +110,10 @@ const RecentTransactions = ({
           <Text
             className={`font-medium ${
               item.type === "receive"
-                ? "text-green-600"
+                ? "text-green-600 dark:text-green-400"
                 : item.type === "send"
-                  ? "text-red-600"
-                  : "text-gray-500"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-gray-500 dark:text-gray-400"
             }`}
           >
             {item.type === "send" ? "-" : "+"}
@@ -120,21 +122,27 @@ const RecentTransactions = ({
         </View>
 
         <View className="flex-row justify-between mt-1">
-          <Text className="text-xs text-gray-500">{item.timestamp}</Text>
-          <Text className="text-xs text-gray-500">{item.fiatValue}</Text>
+          <Text className="text-xs text-gray-500 dark:text-gray-400">
+            {item.timestamp}
+          </Text>
+          <Text className="text-xs text-gray-500 dark:text-gray-400">
+            {item.fiatValue}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View className="bg-white rounded-xl p-4 shadow-sm">
+    <View className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="text-lg font-semibold text-gray-900">
+        <Text className="text-lg font-semibold text-gray-900 dark:text-white">
           Recent Transactions
         </Text>
         <TouchableOpacity onPress={onViewAll}>
-          <Text className="text-blue-600 font-medium">View All</Text>
+          <Text className="text-blue-600 dark:text-blue-400 font-medium">
+            View All
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -153,8 +161,10 @@ const RecentTransactions = ({
             }}
             className="w-16 h-16 mb-4"
           />
-          <Text className="text-gray-500 text-center">No transactions yet</Text>
-          <Text className="text-gray-400 text-center text-sm mt-1">
+          <Text className="text-gray-500 dark:text-gray-400 text-center">
+            No transactions yet
+          </Text>
+          <Text className="text-gray-400 dark:text-gray-500 text-center text-sm mt-1">
             Your transaction history will appear here
           </Text>
         </View>
