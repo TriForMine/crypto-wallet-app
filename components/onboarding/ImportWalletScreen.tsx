@@ -14,6 +14,7 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react-native";
+import { useWallet } from "../../context/WalletContext";
 
 interface AppHeaderProps {
   title: string;
@@ -50,11 +51,12 @@ const ImportWalletScreen = ({
   onComplete = () => {},
   onBack = () => {},
 }: ImportWalletScreenProps) => {
+  const { validateSeedPhraseFormat } = useWallet();
   const [seedPhrase, setSeedPhrase] = useState("");
   const [showPhrase, setShowPhrase] = useState(false);
   const [error, setError] = useState("");
 
-  const validateSeedPhrase = (phrase: string) => {
+  const validateSeedPhraseHandler = (phrase: string) => {
     // Basic validation - check if it has 12, 15, 18, 21, or 24 words
     const words = phrase.trim().split(/\s+/);
     const validWordCounts = [12, 15, 18, 21, 24];
@@ -66,14 +68,20 @@ const ImportWalletScreen = ({
       return false;
     }
 
-    // Additional validation would be implemented here in a real app
+    // Use the BIP39 validation from the wallet context
+    if (!validateSeedPhraseFormat(phrase)) {
+      setError(
+        "Invalid seed phrase. Please check for typos or incorrect words.",
+      );
+      return false;
+    }
+
     setError("");
     return true;
   };
 
   const handleImport = () => {
-    if (validateSeedPhrase(seedPhrase)) {
-      // In a real app, we would properly validate and process the seed phrase
+    if (validateSeedPhraseHandler(seedPhrase)) {
       onComplete(seedPhrase);
     }
   };

@@ -8,6 +8,8 @@ import "react-native-reanimated";
 import "../global.css";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { WalletProvider } from "../context/WalletContext";
+import "react-native-get-random-values";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,20 +38,22 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="auth" />
-          <Stack.Screen name="onboarding" />
-          <Stack.Screen name="dashboard" />
-          <Stack.Screen name="send" />
-          <Stack.Screen name="receive" />
-          <Stack.Screen name="history" />
-          <Stack.Screen name="wallets" />
-          <Stack.Screen name="settings" />
-        </Stack>
-        <StatusBar style="light" />
-      </ThemeProvider>
+      <WalletProvider>
+        <ThemeProvider value={DefaultTheme}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="auth" />
+            <Stack.Screen name="onboarding" />
+            <Stack.Screen name="dashboard" />
+            <Stack.Screen name="send" />
+            <Stack.Screen name="receive" />
+            <Stack.Screen name="history" />
+            <Stack.Screen name="wallets" />
+            <Stack.Screen name="settings" />
+          </Stack>
+          <StatusBar style="light" />
+        </ThemeProvider>
+      </WalletProvider>
     </SafeAreaProvider>
   );
 }
