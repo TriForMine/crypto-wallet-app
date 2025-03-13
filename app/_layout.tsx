@@ -39,6 +39,14 @@ export default function RootLayout() {
       <ThemeProvider value={DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
+          <Stack.Screen name="auth" />
+          <Stack.Screen name="onboarding" />
+          <Stack.Screen name="dashboard" />
+          <Stack.Screen name="send" />
+          <Stack.Screen name="receive" />
+          <Stack.Screen name="history" />
+          <Stack.Screen name="wallets" />
+          <Stack.Screen name="settings" />
         </Stack>
         <StatusBar style="light" />
       </ThemeProvider>

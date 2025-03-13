@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { Camera } from "expo-camera";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { Camera, CameraType, BarCodeScanningResult } from "expo-camera";
 import { useRouter } from "expo-router";
 import { Scan, X } from "lucide-react-native";
 
@@ -19,21 +18,15 @@ const QRScanner = ({
   const router = useRouter();
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const getCameraPermissions = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     };
 
-    getBarCodeScannerPermissions();
+    getCameraPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
+  const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
     setScanned(true);
     // Validate if the scanned data is a valid cryptocurrency address
     // This is a simplified validation - in a real app, you would implement proper validation
@@ -83,11 +76,11 @@ const QRScanner = ({
     <View className="flex-1 bg-gray-900">
       <Camera
         className="flex-1"
-        type={Camera.Constants.Type.back}
-        barCodeScannerSettings={{
-          barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-        }}
+        type={CameraType.back}
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        barCodeScannerSettings={{
+          barCodeTypes: ["qr"],
+        }}
       >
         <View className="flex-1 justify-between">
           {/* Overlay with scanning frame */}

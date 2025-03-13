@@ -102,7 +102,6 @@ const AuthScreen = ({
 
     setIsAuthenticating(false);
     onAuthenticated();
-    router.replace("/");
   };
 
   return (

@@ -45,7 +45,6 @@ const OnboardingScreen = ({ onComplete = () => {} }: OnboardingScreenProps) => {
   const handleSecurityComplete = () => {
     // In a real app, we would save the encrypted wallet here
     onComplete();
-    router.replace("/");
   };
 
   const handleBack = () => {
