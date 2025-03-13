@@ -134,7 +134,7 @@ const RecentTransactions = ({
   );
 
   return (
-    <View className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+    <View className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-sm">
       <View className="flex-row justify-between items-center mb-4">
         <Text className="text-lg font-semibold text-gray-900 dark:text-white">
           Recent Transactions
@@ -152,9 +152,10 @@ const RecentTransactions = ({
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           scrollEnabled={false}
+          className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden"
         />
       ) : (
-        <View className="py-8 items-center justify-center">
+        <View className="py-8 items-center justify-center bg-white dark:bg-gray-700 rounded-lg">
           <Image
             source={{
               uri: "https://api.dicebear.com/7.x/avataaars/svg?seed=transactions",
